@@ -1,23 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Adding link to use Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="./Develop/style.css">
+    <link rel="stylesheet" href="./Develop/css/style.css">
     <title>Document</title>
 </head>
 <body>
     <section class="text-center mt-2.5 shadow">
-    <h1 class="text-3xl font-bold font-mono">Quality Restaurant Finder</h1>
-    <h6>Please enter an address to find great restaurants around you!</h6>
-    <div class="flex justify-center mt-2.5 pb-2.5">
-        <input class="border shadow" type="text" id="address" placeholder="Address">
-        <input class="border shadow" type="text" id="city" placeholder="City/Town">
-    </div>
-    <button id="submit" class="border-black p-1">Submit</button>
-</section>
-  <script src="./Develop/script.js"></script>  
+        <h1 class="text-3xl font-bold font-mono">Quality Restaurant Finder</h1>
+        <h6>Please enter an address to find great restaurants around you!</h6>
+        <form id="frmUserSearch">
+            <div class="flex justify-center mt-2.5 pb-2.5">
+                <input class="border shadow" type="text" id="txtboxUserAddress" placeholder="Address">
+                <input class="border shadow" type="text" id="txtboxCityName" placeholder="City/Town">
+            </div>
+            <button id="submit" class="border-black p-1">Submit</button>
+        </form>
+        <hr>
+        <div class="flex justify-left mt-2.5 pb-2.5">
+            <div id="divContainerMain"></div>    
+            
+        </div>
+    </section>
+    <script src="./Develop/js/script.js"></script>
 </body>
 </html>
