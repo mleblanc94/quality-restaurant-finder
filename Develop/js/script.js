@@ -47,7 +47,7 @@ var getUserRepos = function (USearch) {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '77c9ad1ba2msh66acc031819d9c0p1f831bjsndb9b045043a0',
+            'X-RapidAPI-Key': '4c261bf440mshaad27c31e06c53bp1101fejsnd94b5595d80a',
             'X-RapidAPI-Host': 'worldwide-restaurants.p.rapidapi.com'
         },
         body: new URLSearchParams({
@@ -78,7 +78,7 @@ function getRestaurantData(intULocId) {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '77c9ad1ba2msh66acc031819d9c0p1f831bjsndb9b045043a0',
+            'X-RapidAPI-Key': '4c261bf440mshaad27c31e06c53bp1101fejsnd94b5595d80a',
             'X-RapidAPI-Host': 'worldwide-restaurants.p.rapidapi.com'
         },
         body: new URLSearchParams({
