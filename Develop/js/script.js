@@ -182,6 +182,8 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
             strFLContnet = strFLContnet + ' <br /> <b><ul>Options:</ul></b>';
             strFLContnet = strFLContnet + getInnerContents(objRestuarantAPIJson.results.data[i].dietary_restrictions);
         }
+
+        strFLContnet = strFLContnet + '<br> <button style="background: gray; padding: 5px; color: white;">Add to Favorites!</button>'
         divCardBlockContentTemp3.innerHTML = strFLContnet;
 
         divCardBlockBody.append(imgWeatherIcon);
@@ -226,6 +228,10 @@ function fetchCoords() {
         console.error("Error fetching geocoding data:", error);
     });
 }
+
+// function addFavorites() {
+
+// }
 
 submitButton.addEventListener('click', fetchCoords);
 
