@@ -5,6 +5,7 @@ var userFormEl = document.querySelector('#frmUserSearch');
 var strCityName = document.querySelector('#txtboxCityName');
 var strUserAddress = document.querySelector('#txtboxUserAddress');
 var divContainerMain = document.querySelector('#divContainerMain');
+var submitButton = document.querySelector('#submit');
 
 //Function on Startup of Application
 function init() {
@@ -202,5 +203,31 @@ function getInnerContents(objContents){
     }    
     return strInnerContents;
 }
+
+function fetchCoords() {
+    var address = strUserAddress.value + " " + strCityName.value;
+    console.log(address)
+    var apiKey = "AIzaSyChg6D6L48QD0YxK1FxWbUOttaTBFLGl1A";
+    var apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
+    fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === "OK") {
+            console.log(data);
+        const firstResult = data.results[0];
+        const location = firstResult.geometry.location;
+        console.log("Latitude:", location.lat);
+        console.log("Longitude:", location.lng);
+        } else {
+        console.error("Geocoding failed:", data.status);
+        }
+    })
+    .catch(error => {
+        console.error("Error fetching geocoding data:", error);
+    });
+}
+
+submitButton.addEventListener('click', fetchCoords);
+
 
 init();//Initiate the Application
