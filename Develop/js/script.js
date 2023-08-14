@@ -6,6 +6,9 @@ var strCityName = document.querySelector('#txtboxCityName');
 var strUserAddress = document.querySelector('#txtboxUserAddress');
 var divContainerMain = document.querySelector('#divContainerMain');
 var submitButton = document.querySelector('#submit');
+var intOriginLat = 0;
+var intOriginLong = 0;
+
 
 //Function on Startup of Application
 function init() {
@@ -13,14 +16,14 @@ function init() {
     userFormEl.addEventListener('submit', SearchSubmitHandler);// Search Button   
 
     //Empty Pre existing data
-    divContainerMain.textContent = "";   
+    divContainerMain.textContent = "";
 }
 
 //Function called when search button is clicked
 var SearchSubmitHandler = function (event) {
     event.preventDefault();
     //Empty existing data
-    divContainerMain.textContent = "";    
+    divContainerMain.textContent = "";
 
     var strUserSearch = strCityName.value.trim();//get User input
     var strUAddress = strUserAddress.value.trim();//get User input
@@ -37,14 +40,14 @@ var SearchSubmitHandler = function (event) {
 var getUserRepos = function (USearch) {
     //Empty existing data
     divContainerMain.textContent = "";
-    
+
     var intLocationID = 0;
     const strLocationIDAPIurl = 'https://worldwide-restaurants.p.rapidapi.com/typeahead';
     const options = {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '4c261bf440mshaad27c31e06c53bp1101fejsnd94b5595d80a',
+            'X-RapidAPI-Key': '842fcf83d1msh73d65cea85f5337p127931jsn1beb0099353f',
             'X-RapidAPI-Host': 'worldwide-restaurants.p.rapidapi.com'
         },
         body: new URLSearchParams({
@@ -56,8 +59,8 @@ var getUserRepos = function (USearch) {
     fetch(strLocationIDAPIurl, options)
         .then(function (response) {
             if (response.ok) {
-                response.json().then(function (data) {                    
-                    intLocationID = data.results.data[0].result_object.location_id;                    
+                response.json().then(function (data) {
+                    intLocationID = data.results.data[0].result_object.location_id;
                     getRestaurantData(intLocationID);
                 });
             } else {
@@ -75,7 +78,7 @@ function getRestaurantData(intULocId) {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '4c261bf440mshaad27c31e06c53bp1101fejsnd94b5595d80a',
+            'X-RapidAPI-Key': '842fcf83d1msh73d65cea85f5337p127931jsn1beb0099353f',
             'X-RapidAPI-Host': 'worldwide-restaurants.p.rapidapi.com'
         },
         body: new URLSearchParams({
@@ -87,10 +90,10 @@ function getRestaurantData(intULocId) {
     };
 
     fetch(strRestaurantDataAPIurl, optionsRestaurant)
-        .then(function (response) {            
+        .then(function (response) {
             if (response.ok) {
-                response.json().then(function (data) {                   
-                    console.log(data);                                   
+                response.json().then(function (data) {
+                    //console.log(data);                                   
                     DisplayRestaurantData(data);
                 });
             } else {
@@ -102,32 +105,25 @@ function getRestaurantData(intULocId) {
         });
 }
 
-function DisplayRestaurantData(objRestuarantAPIJson) { 
-    let intRLocationId=0;// Restuarant location Id
-    let intRLatitude=0;// Restuarant latitude
-    let intRLongitude=0;// Restuarant longitude
+function DisplayRestaurantData(objRestuarantAPIJson) {
+  
     let strFLContnet = '';
     //loop through the JSON
     for (i = 0; i < 6; i++) {
-        //Store Location Details
-        intRLocationId = objRestuarantAPIJson.results.data[i].location_id;
-        intRLatitude = objRestuarantAPIJson.results.data[i].latitude;
-        intRLongitude = objRestuarantAPIJson.results.data[i].longitude;
-
+        //Store Location Details  
         //Main Card display
         var lnDivider = document.createElement('hr');//line 
         divContainerMain.append(lnDivider);
 
-        var divCardBlock = document.createElement('div');//Card
-        divCardBlock.setAttribute('class', 'card');
+        var divCardBlock = document.createElement('div');//Card        
         divCardBlock.setAttribute('style', 'max-width: 92rem; margin: 5px; background-color:#FFFFFF;');
 
         var divCardBlockHeader = document.createElement('div');//card Header
         divCardBlockHeader.setAttribute('class', 'card-header');
         divCardBlockHeader.setAttribute('style', 'background-color: #FFFFFF')
 
-        var hTitle = document.createElement('h2')//header title
-        hTitle.setAttribute('class','mb-2 mt-0 text-4xl font-medium leading-tight text-primary')
+        var hTitle = document.createElement('h2')//header title 
+        hTitle.setAttribute('class', 'text-gray-900 mb-2 mt-0 text-4xl font-bold leading-tight text-primary')
         hTitle.textContent = objRestuarantAPIJson.results.data[i].name;//Hotel Name        
         //add icon to title        
         divCardBlockHeader.append(hTitle);//add title to header
@@ -141,99 +137,111 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
         imgWeatherIcon.setAttribute('alt', 'Hotel');
 
         //Details
+
         var divCardBlockContentTemp = document.createElement('p');
         divCardBlockContentTemp.setAttribute('class', 'card-text');
         strFLContnet = ''
-        if(objRestuarantAPIJson.results.data[i].description != '' && objRestuarantAPIJson.results.data[i].description != null)
-        strFLContnet = objRestuarantAPIJson.results.data[i].description + '<br /><br />';
-        strFLContnet = strFLContnet + '<b>Rating:</b> ' + objRestuarantAPIJson.results.data[i].rating + ',  <b>Ranking :</b> '  + objRestuarantAPIJson.results.data[i].ranking + 
-        ',  <b>Open/Close :</b> '  + objRestuarantAPIJson.results.data[i].open_now_text + ', ' + objRestuarantAPIJson.results.data[i].price_level + 
-        ',  <b>Distance :</b> '  + objRestuarantAPIJson.results.data[i].gb_distance; 
-        
+        if (objRestuarantAPIJson.results.data[i].description != '' && objRestuarantAPIJson.results.data[i].description != null)
+            strFLContnet = objRestuarantAPIJson.results.data[i].description + '<br /><br />';
+        strFLContnet = strFLContnet + '<b>Rating:</b> ' + objRestuarantAPIJson.results.data[i].rating + ',  <b>Ranking :</b> ' + objRestuarantAPIJson.results.data[i].ranking +
+            ',  <b>Open/Close :</b> ' + objRestuarantAPIJson.results.data[i].open_now_text + ', ' + objRestuarantAPIJson.results.data[i].price_level +
+            ',  <b>Distance :</b> <label id="DD-'+i+'"></label>';
+        //objRestuarantAPIJson.results.data[i].gb_distance
         divCardBlockContentTemp.innerHTML = strFLContnet;
-        strFLContnet='';//Empty Contents 
+        strFLContnet = '';//Empty Contents 
 
         var divCardBlockContentTemp2 = document.createElement('p');
         divCardBlockContentTemp2.setAttribute('class', 'card-text');
         //add details
-        strFLContnet = '<b>Address:</b> ' + objRestuarantAPIJson.results.data[i].address + ',  <b>Phone </b> '  + objRestuarantAPIJson.results.data[i].phone + 
-        ',  <b>email:</b> <a href = "mailto:'  + objRestuarantAPIJson.results.data[i].email+ '">Send Email</a><br />'+
-        '<a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="'  + objRestuarantAPIJson.results.data[i].website+ '" target="_blank">Restuarant Website</a>'+
-        ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="'  + objRestuarantAPIJson.results.data[i].web_url+ '" target="_blank">Trip Advisor Website</a>'+
-        ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="'  + objRestuarantAPIJson.results.data[i].web_url+ '#REVIEWS" target="_blank">Read Review</a>'+
-        ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="'  + objRestuarantAPIJson.results.data[i].write_review+ '" target="_blank">Write Review</a>';
-        if (objRestuarantAPIJson.results.data[i].booking != null){
-            strFLContnet= strFLContnet + '<br /><b>Order Online :</b> <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="'  + objRestuarantAPIJson.results.data[i].booking.url+ '" target="_blank">' +
-        ' '  + objRestuarantAPIJson.results.data[i].booking.provider+ '</a>';
-        }        
+        strFLContnet = '<b>Address:</b> ' + objRestuarantAPIJson.results.data[i].address + ',  <b>Phone </b> ' + objRestuarantAPIJson.results.data[i].phone +
+            ',  <b>email:</b> <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href = "mailto:' + objRestuarantAPIJson.results.data[i].email + '" target="_blank">Send Email</a><br />' +
+            '<a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].website + '" target="_blank">Restuarant Website</a>' +
+            ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].web_url + '" target="_blank">Trip Advisor Website</a>' +
+            ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].web_url + '#REVIEWS" target="_blank">Read Review</a>' +
+            ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].write_review + '" target="_blank">Write Review</a>';
+        if (objRestuarantAPIJson.results.data[i].booking != null) {
+            strFLContnet = strFLContnet + '<br /><b>Order Online :</b> <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].booking.url + '" target="_blank">' +
+                ' ' + objRestuarantAPIJson.results.data[i].booking.provider + '</a>';
+        }
         divCardBlockContentTemp2.innerHTML = strFLContnet;
-       
-        strFLContnet='';//Empty Contents 
+
+        strFLContnet = '';//Empty Contents 
         var divCardBlockContentTemp3 = document.createElement('p');
         divCardBlockContentTemp3.setAttribute('class', 'card-text');
         //get Cuisine
-        if(objRestuarantAPIJson.results.data[i].cuisine != '' && objRestuarantAPIJson.results.data[i].cuisine != null){
+        if (objRestuarantAPIJson.results.data[i].cuisine != '' && objRestuarantAPIJson.results.data[i].cuisine != null) {
             strFLContnet = '<br /><b><ul>Cuisine: </ul></b>';
             let objContents = objRestuarantAPIJson.results.data[i].cuisine;
-            strFLContnet = strFLContnet + getInnerContents(objRestuarantAPIJson.results.data[i].cuisine);            
+            strFLContnet = strFLContnet + getInnerContents(objRestuarantAPIJson.results.data[i].cuisine);
         }
-       //get Food Options
-        if(objRestuarantAPIJson.results.data[i].dietary_restrictions != '' && objRestuarantAPIJson.results.data[i].dietary_restrictions != null){
+        //get Food Options
+        if (objRestuarantAPIJson.results.data[i].dietary_restrictions != '' && objRestuarantAPIJson.results.data[i].dietary_restrictions != null) {
             strFLContnet = strFLContnet + ' <br /> <b><ul>Options:</ul></b>';
             strFLContnet = strFLContnet + getInnerContents(objRestuarantAPIJson.results.data[i].dietary_restrictions);
         }
-
+        //Favorites button
         strFLContnet = strFLContnet + '<br> <button style="background: gray; padding: 5px; color: white;">Add to Favorites!</button>'
         divCardBlockContentTemp3.innerHTML = strFLContnet;
 
+
         divCardBlockBody.append(imgWeatherIcon);
-        divCardBlockBody.append(divCardBlockContentTemp);     
-        divCardBlockBody.append(divCardBlockContentTemp2);  
-        divCardBlockBody.append(divCardBlockContentTemp3);    
+        divCardBlockBody.append(divCardBlockContentTemp);
+        divCardBlockBody.append(divCardBlockContentTemp2);
+        divCardBlockBody.append(divCardBlockContentTemp3);
         divCardBlock.append(divCardBlockHeader);
         divCardBlock.append(divCardBlockBody);
         divContainerMain.append(divCardBlock);//add card to container
 
+        fetchDistance(objRestuarantAPIJson.results.data[i].address,i);
+
     }
 }
 
-function getInnerContents(objContents){
-    let strInnerContents='';
-    for(cnt=0; cnt<objContents.length; cnt++){
-        if(cnt != 0) strInnerContents = strInnerContents +', ';
+function getInnerContents(objContents) {
+    let strInnerContents = '';
+    for (cnt = 0; cnt < objContents.length; cnt++) {
+        if (cnt != 0) strInnerContents = strInnerContents + ', ';
         strInnerContents = strInnerContents + objContents[cnt].name;
-    }    
+    }
     return strInnerContents;
 }
 
-function fetchCoords() {
-    var address = strUserAddress.value + " " + strCityName.value;
-    console.log(address)
-    var apiKey = "AIzaSyChg6D6L48QD0YxK1FxWbUOttaTBFLGl1A";
-    var apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(address)}&key=${apiKey}`;
-    fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-        if (data.status === "OK") {
-            console.log(data);
-        const firstResult = data.results[0];
-        const location = firstResult.geometry.location;
-        console.log("Latitude:", location.lat);
-        console.log("Longitude:", location.lng);
+function fetchDistance(strdestinationlat,id) {
+    // var origin = intOriginLat+','+ intOriginLong;
+    // var destination = intdestinationlat+','+ intdestinationlong;
+    var ielement="DD-"
+    var origin = strUserAddress.value + " " + strCityName.value;
+    var distanceSpan = document.getElementById('DD-'+id);
+    var strResults="working";
+    var service = new google.maps.DistanceMatrixService();
+
+    service.getDistanceMatrix({
+        origins: [origin],
+        destinations: [strdestinationlat],
+        travelMode: google.maps.TravelMode.DRIVING, // You can change this to other modes like WALKING, BICYCLING, or TRANSIT
+        unitSystem: google.maps.UnitSystem.IMPERIAL, // You can change this to METRIC if you prefer metric units
+        avoidFerries: false,
+        avoidHighways: false,
+        avoidTolls: false,
+    }, function (response, status) {
+
+        if (status == google.maps.DistanceMatrixStatus.OK) {
+            var distance = response.rows[0].elements[0].distance.text;
+            var duration = response.rows[0].elements[0].duration.text;
+
+            strResults = 'Distance: ' + distance + ' , Duration: ' + duration;
+            console.log('strResults inside: '+ strResults);
+            distanceSpan.textContent=strResults;
         } else {
-        console.error("Geocoding failed:", data.status);
+            strResults = 'Error calculating distance & duration';
         }
-    })
-    .catch(error => {
-        console.error("Error fetching geocoding data:", error);
     });
+    console.log('strResults: '+ strResults);
+    //return strResults;
 }
 
 // function addFavorites() {
 
 // }
-
-submitButton.addEventListener('click', fetchCoords);
-
 
 init();//Initiate the Application
