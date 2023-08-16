@@ -8,7 +8,7 @@ var divContainerMain = document.querySelector('#divContainerMain');
 var submitButton = document.querySelector('#submit');
 var intOriginLat = 0;
 var intOriginLong = 0;
-
+let favoritesArea = document.querySelector('#favorites');
 
 //Function on Startup of Application
 function init() {
@@ -180,7 +180,7 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
             strFLContnet = strFLContnet + getInnerContents(objRestuarantAPIJson.results.data[i].dietary_restrictions);
         }
         //Favorites button
-        strFLContnet = strFLContnet + '<br> <button style="background: gray; padding: 5px; color: white;">Add to Favorites!</button>'
+        strFLContnet = strFLContnet + '<br> <button class="favoritesButtons" data-restaurant-name="' + objRestuarantAPIJson.results.data[i].name + '" style="background: gray; padding: 5px; color: white;">Add to Favorites!</button>'
         divCardBlockContentTemp3.innerHTML = strFLContnet;
 
 
@@ -193,6 +193,7 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
         divContainerMain.append(divCardBlock);//add card to container
 
         fetchDistance(objRestuarantAPIJson.results.data[i].address,i);
+        storeFavorites();
 
     }
 }
@@ -239,9 +240,49 @@ function fetchDistance(strdestinationlat,id) {
     console.log('strResults: '+ strResults);
     //return strResults;
 }
+    function storeFavorites() {
+        let favoritesButtons = document.querySelectorAll('.favoritesButtons');
+    if (localStorage.length === 0) {
+        let storedRestaurants = [];
+        favoritesButtons.forEach(button=>{
+            button.addEventListener('click', ()=> {
+                const restaurantName = button.getAttribute('data-restaurant-name');
+                storedRestaurants.unshift(restaurantName);
+                let restaurantString = JSON.stringify(storedRestaurants);
+                localStorage.setItem('restaurants', restaurantString);
+            })
+        })
+    } else {
+        let storedRestaurantString = localStorage.getItem('restaurants');
+        let storedRestaurantsArray = JSON.parse(storedRestaurantString);
+        favoritesButtons.forEach(button=>{
+            button.addEventListener('click', ()=> {
+                const restaurantName = button.getAttribute('data-restaurant-name');
+                storedRestaurantsArray.unshift(restaurantName);
+                let storedRestaurantString = JSON.stringify(storedRestaurantsArray);
+                localStorage.setItem('restaurants', storedRestaurantString)
+            })
+        })
+    }
+}
 
-// function addFavorites() {
+function getRestaurants() {
+    let storedRestaurantsString = localStorage.getItem('restaurants');
+     let storedRestaurantArray = JSON.parse(storedRestaurantsString);
+       if (localStorage.length > 0) {
+     for (let i = 0; i < storedRestaurantArray.length; i++) {
+       let restaurant = storedRestaurantArray[i];
+       const divTag = document.createElement("div")
+       const thisRestaurant = document.createElement("h3");
+       searchNode = document.createTextNode(restaurant);
+       thisRestaurant.appendChild(searchNode)
+       divTag.appendChild(thisRestaurant)
+       favoritesArea.appendChild(divTag);
+     }
+    }
+    }
 
-// }
+    getRestaurants();
+
 
 init();//Initiate the Application
