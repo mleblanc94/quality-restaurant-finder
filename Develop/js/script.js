@@ -29,14 +29,14 @@ var SearchSubmitHandler = function (event) {
     var strUAddress = strUserAddress.value.trim();//get User input
 
     if (strUserSearch && strUAddress) {
-        getUserRepos(strUserSearch);//get weather data        
+        getUserRepos(strUserSearch);//get restaurant data        
         strCityName.textContent = '';
     } else {
         alert('Please enter a City Name and Address');
     }
 };
 
-//function to get weather data using the Openweather API.
+//function to get restaurant data using the worldwide restaurants API.
 var getUserRepos = function (USearch) {
     //Empty existing data
     divContainerMain.textContent = "";
@@ -93,7 +93,6 @@ function getRestaurantData(intULocId) {
         .then(function (response) {
             if (response.ok) {
                 response.json().then(function (data) {
-                    //console.log(data);                                   
                     DisplayRestaurantData(data);
                 });
             } else {
@@ -146,7 +145,6 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
         strFLContnet = strFLContnet + '<b>Rating:</b> ' + objRestuarantAPIJson.results.data[i].rating + ',  <b>Ranking :</b> ' + objRestuarantAPIJson.results.data[i].ranking +
             ',  <b>Open/Close :</b> ' + objRestuarantAPIJson.results.data[i].open_now_text + ', ' + objRestuarantAPIJson.results.data[i].price_level +
             ',  <b>Distance :</b> <label id="DD-'+i+'"></label>';
-        //objRestuarantAPIJson.results.data[i].gb_distance
         divCardBlockContentTemp.innerHTML = strFLContnet;
         strFLContnet = '';//Empty Contents 
 
@@ -194,7 +192,7 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
 
         fetchDistance(objRestuarantAPIJson.results.data[i].address,i);
     }
-    // Runs this function after looping in order to set event listeners to elements
+    // Runs after looping in order to set event listeners to button elements
     storeFavorites();
 }
 
