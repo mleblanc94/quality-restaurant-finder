@@ -193,9 +193,8 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
         divContainerMain.append(divCardBlock);//add card to container
 
         fetchDistance(objRestuarantAPIJson.results.data[i].address,i);
-        storeFavorites();
-
     }
+    storeFavorites();
 }
 
 function getInnerContents(objContents) {
@@ -244,10 +243,15 @@ function fetchDistance(strdestinationlat,id) {
         let favoritesButtons = document.querySelectorAll('.favoritesButtons');
     if (localStorage.length === 0) {
         let storedRestaurants = [];
-        favoritesButtons.forEach(button=>{
+        favoritesButtons.forEach((button)=>{
+            
             button.addEventListener('click', ()=> {
                 const restaurantName = button.getAttribute('data-restaurant-name');
                 storedRestaurants.unshift(restaurantName);
+                const thisRestaurantSearch = document.createElement('h3');
+                searchNode = document.createTextNode(restaurantName);
+                thisRestaurantSearch.appendChild(searchNode);
+                favoritesArea.appendChild(thisRestaurantSearch);
                 let restaurantString = JSON.stringify(storedRestaurants);
                 localStorage.setItem('restaurants', restaurantString);
             })
@@ -255,10 +259,16 @@ function fetchDistance(strdestinationlat,id) {
     } else {
         let storedRestaurantString = localStorage.getItem('restaurants');
         let storedRestaurantsArray = JSON.parse(storedRestaurantString);
-        favoritesButtons.forEach(button=>{
+        favoritesButtons.forEach((button)=>{
+            console.log(button);
             button.addEventListener('click', ()=> {
+                
                 const restaurantName = button.getAttribute('data-restaurant-name');
                 storedRestaurantsArray.unshift(restaurantName);
+                const thisRestaurantSearch = document.createElement('h3');
+                searchNode = document.createTextNode(restaurantName);
+                thisRestaurantSearch.appendChild(searchNode);
+                favoritesArea.appendChild(thisRestaurantSearch);
                 let storedRestaurantString = JSON.stringify(storedRestaurantsArray);
                 localStorage.setItem('restaurants', storedRestaurantString)
             })
