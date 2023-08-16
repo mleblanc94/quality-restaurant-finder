@@ -11,30 +11,32 @@
     <link rel="stylesheet" href="./Develop/css/style.css">
     <title>Quality Restaurant Finder</title>
 </head>
-
-<body>
+<!-- Body of the page where we include the search area, the users favorites section, and all the restaurants in their area -->
+<!-- The search area -->
+<body class="bg-slate-200">
     <section class="text-center mt-2.5 shadow">
         <h1 class="text-3xl font-bold font-mono">Quality Restaurant Finder</h1>
-        <h6>Please enter an address to find great restaurants around you!</h6>
+        <h5><i>Please enter an address to find great restaurants around you!</i></h5>
         <form id="frmUserSearch">
             <div class="flex justify-center mt-2.5 pb-2.5">
-                <input class="border shadow" type="text" id="txtboxUserAddress" placeholder="Address">
-                <input class="border shadow" type="text" id="txtboxCityName" placeholder="City,State(ex. Boston MA)">
+                <input class="border shadow mr-1" type="text" id="txtboxUserAddress" placeholder="Address">
+                <input class="border shadow ml-1" type="text" id="txtboxCityName" placeholder="City,State(ex. Boston MA)">
             </div>
-            <button id="submit" class="border-black p-1">Submit</button>
+            <button id="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-3">Submit</button>
         </form>
     </section>
     <hr>
+    <!-- Favorites Section -->
     <div class="flex">
         <div id="favorites" class="w-1/5 border-r-orange-800">
             <h1 class="text-slate-950"><b>My Favorites</b></h1>
 
         </div>
+        <!-- Main area where we display the results -->
         <div class="flex justify-left mt-2.5 pb-2.5">
             <div id="divContainerMain"></div>
         </div>
     </div>
     <script src="./Develop/js/script.js"></script>
 </body>
-
 </html>

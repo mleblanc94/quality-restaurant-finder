@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(244 244 245);
+}
+
 #top {
     text-align: center;
 }
@@ -5,5 +9,5 @@
 #favorites {
     border-right: #000000 2px solid;
     margin: 0px 20px;
-    height: 100vh;
+    height: auto;
 }

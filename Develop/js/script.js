@@ -194,6 +194,7 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
 
         fetchDistance(objRestuarantAPIJson.results.data[i].address,i);
     }
+    // Runs this function after looping in order to set event listeners to elements
     storeFavorites();
 }
 
@@ -239,12 +240,13 @@ function fetchDistance(strdestinationlat,id) {
     console.log('strResults: '+ strResults);
     //return strResults;
 }
+
+// Stores the favorites into local storage and takes into consideration whether or not there was previous data stored
     function storeFavorites() {
         let favoritesButtons = document.querySelectorAll('.favoritesButtons');
     if (localStorage.length === 0) {
         let storedRestaurants = [];
-        favoritesButtons.forEach((button)=>{
-            
+        favoritesButtons.forEach(button=>{       
             button.addEventListener('click', ()=> {
                 const restaurantName = button.getAttribute('data-restaurant-name');
                 storedRestaurants.unshift(restaurantName);
@@ -259,10 +261,8 @@ function fetchDistance(strdestinationlat,id) {
     } else {
         let storedRestaurantString = localStorage.getItem('restaurants');
         let storedRestaurantsArray = JSON.parse(storedRestaurantString);
-        favoritesButtons.forEach((button)=>{
-            console.log(button);
-            button.addEventListener('click', ()=> {
-                
+        favoritesButtons.forEach(button=>{
+            button.addEventListener('click', ()=> {  
                 const restaurantName = button.getAttribute('data-restaurant-name');
                 storedRestaurantsArray.unshift(restaurantName);
                 const thisRestaurantSearch = document.createElement('h3');
@@ -276,6 +276,7 @@ function fetchDistance(strdestinationlat,id) {
     }
 }
 
+//Retrieves previous restaurants that have been favorited by the user
 function getRestaurants() {
     let storedRestaurantsString = localStorage.getItem('restaurants');
      let storedRestaurantArray = JSON.parse(storedRestaurantsString);
@@ -291,7 +292,7 @@ function getRestaurants() {
      }
     }
     }
-
+    //Runs the function whenever the application is started
     getRestaurants();
 
 
