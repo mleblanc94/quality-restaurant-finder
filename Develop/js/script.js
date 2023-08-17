@@ -47,7 +47,7 @@ var getUserRepos = function (USearch) {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '842fcf83d1msh73d65cea85f5337p127931jsn1beb0099353f',
+            'X-RapidAPI-Key': '4c261bf440mshaad27c31e06c53bp1101fejsnd94b5595d80a',
             'X-RapidAPI-Host': 'worldwide-restaurants.p.rapidapi.com'
         },
         body: new URLSearchParams({
@@ -78,7 +78,7 @@ function getRestaurantData(intULocId) {
         method: 'POST',
         headers: {
             'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': '842fcf83d1msh73d65cea85f5337p127931jsn1beb0099353f',
+            'X-RapidAPI-Key': '4c261bf440mshaad27c31e06c53bp1101fejsnd94b5595d80a',
             'X-RapidAPI-Host': 'worldwide-restaurants.p.rapidapi.com'
         },
         body: new URLSearchParams({
@@ -153,7 +153,7 @@ function DisplayRestaurantData(objRestuarantAPIJson) {
         //add details
         strFLContnet = '<b>Address:</b> ' + objRestuarantAPIJson.results.data[i].address + ',  <b>Phone </b> ' + objRestuarantAPIJson.results.data[i].phone +
             ',  <b>email:</b> <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href = "mailto:' + objRestuarantAPIJson.results.data[i].email + '" target="_blank">Send Email</a><br />' +
-            '<a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].website + '" target="_blank">Restuarant Website</a>' +
+            '<a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].website + '" target="_blank">Restaurant Website</a>' +
             ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].web_url + '" target="_blank">Trip Advisor Website</a>' +
             ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].web_url + '#REVIEWS" target="_blank">Read Review</a>' +
             ', <a class="text-primary underline decoration-transparent transition duration-300 ease-in-out hover:decoration-inherit" href ="' + objRestuarantAPIJson.results.data[i].write_review + '" target="_blank">Write Review</a>';
