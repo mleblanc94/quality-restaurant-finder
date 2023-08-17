@@ -276,9 +276,9 @@ function fetchDistance(strdestinationlat,id) {
 
 //Retrieves previous restaurants that have been favorited by the user
 function getRestaurants() {
-    let storedRestaurantsString = localStorage.getItem('restaurants');
-     let storedRestaurantArray = JSON.parse(storedRestaurantsString);
        if (localStorage.length > 0) {
+        let storedRestaurantsString = localStorage.getItem('restaurants');
+        let storedRestaurantArray = JSON.parse(storedRestaurantsString);
      for (let i = 0; i < storedRestaurantArray.length; i++) {
        let restaurant = storedRestaurantArray[i];
        const divTag = document.createElement("div")
