@@ -64,11 +64,11 @@ var getUserRepos = async function (USearch) {
             setTimeout(function () { getRestaurantData(intLocationID);}, 1000); // fix for API call limit
         } else {
             submitButton.removeAttribute('disabled');
-            alert('Error: ' + response.statusText); // if response not OK
+            divContainerMain.innerHTML = "Please enter a valid location"; // if response not OK
         }
     } catch (error) {
         submitButton.removeAttribute('disabled');
-        alert('Unable to connect to API');
+        divContainerMain.innerHTML = "Please enter a valid location";
     }
 };
 
