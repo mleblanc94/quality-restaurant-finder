@@ -8,6 +8,8 @@ body {
 
 #favorites {
     border-right: #000000 2px solid;
-    margin: 0px 20px;
+    border-bottom: #000000 2px solid;
+    margin: 0px 20px 0px 0px;
+    padding-left: 15px;
     height: auto;
 }
